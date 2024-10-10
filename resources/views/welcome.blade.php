@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="retro">
+<html lang="en" data-theme="dracula">
 
 <head>
     <meta charset="UTF-8">
@@ -20,7 +20,8 @@
                             d="M4 6h16M4 12h8m-8 6h16" />
                     </svg>
                 </div>
-                <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                <ul tabindex="0"
+                    class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                     <li><a>Item 1</a></li>
                     <li>
                         <a>Parent</a>
@@ -50,70 +51,33 @@
             </ul>
         </div>
         <div class="navbar-end">
-            <!-- Additional items can go here -->
+            <a class="btn">Button</a>
         </div>
     </div>
-
-    <div class="flex flex-col items-center mt-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="card bg-base-100 w-96 shadow-xl">
-                <figure class="px-10 pt-10">
-                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Shoes" class="rounded-xl" />
-                </figure>
-                <div class="card-body items-center text-center">
-                    <h2 class="card-title">Shoes!</h2>
-                    <p>If a dog chews shoes whose shoes does he choose?</p>
-                    <div class="card-actions">
-                        <button class="btn btn-primary">Buy Now</button>
+    <div class="container mx-auto">
+        <div class="flex justify-center">
+            {{ $posts->links() }}
+        </div>
+        <div class="grid-cols-4 grid gap-4">
+            @foreach($posts as $post)
+                <div>
+                    <div class="card bg-base-100 shadow-xl">
+                        <figure>
+                            <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+                                alt="Shoes" />
+                        </figure>
+                        <div class="card-body">
+                            <h2 class="card-title">{{ $post->title }}</h2>
+                            <p>{{ $post->snippet }}</p>
+                            <div class="card-actions justify-end">
+                                <button class="btn btn-primary">Buy Now</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="card bg-base-100 w-96 shadow-xl">
-                <figure class="px-10 pt-10">
-                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Shoes" class="rounded-xl" />
-                </figure>
-                <div class="card-body items-center text-center">
-                    <h2 class="card-title">Shoes!</h2>
-                    <p>If a dog chews shoes whose shoes does he choose?</p>
-                    <div class="card-actions">
-                        <button class="btn btn-primary">Buy Now</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card bg-base-100 w-96 shadow-xl">
-                <figure class="px-10 pt-10">
-                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Shoes" class="rounded-xl" />
-                </figure>
-                <div class="card-body items-center text-center">
-                    <h2 class="card-title">Shoes!</h2>
-                    <p>If a dog chews shoes whose shoes does he choose?</p>
-                    <div class="card-actions">
-                        <button class="btn btn-primary">Buy Now</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card bg-base-100 w-96 shadow-xl">
-                <figure class="px-10 pt-10">
-                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Shoes" class="rounded-xl" />
-                </figure>
-                <div class="card-body items-center text-center">
-                    <h2 class="card-title">Shoes!</h2>
-                    <p>If a dog chews shoes whose shoes does he choose?</p>
-                    <div class="card-actions">
-                        <button class="btn btn-primary">Buy Now</button>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
-
-    <div class="absolute top-4 right-4">
-        <button class="btn w-64 rounded-full">Button</button>
-    </div>
-
 </body>
 
 </html>
