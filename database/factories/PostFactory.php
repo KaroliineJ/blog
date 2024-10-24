@@ -23,12 +23,12 @@ class PostFactory extends Factory
         }
         $image = null;
         if(rand(0,9)){
-            $image = fake()->imageUrl();
+            $image = 'https://picsum.photos/seed/'. fake()->uuid() .'/1280/720';
         }
         return [
             'title' => fake()->sentence(),
             'body' => fake()->paragraph(6, true), 
-            'image' => fake()->imageUrl(),
+            'image' => $image,
             'created_at' => fake()->dateTimeBetween('-10 years'),
             'updated_at' => fake()->dateTimeBetween('-10 years'),
         ];

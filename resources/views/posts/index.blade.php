@@ -22,16 +22,16 @@
                     <td>{{$post->created_at}}</td>
                     <td>
                         <div class="join">
-                            <a class="btn join-item btn-info">View</button>
-                            <a href="{{ route('posts.show', ['post' => $post]) }}" class="btn join-item btn-warning">View</button>
-                            <a href="{{ route('posts.edit', ['post' => $post]) }}" class="btn join-item btn-warning">Edit</button>
-                                <button form="" class="btn join-item btn-error">Delete</button>
+                            <a href="{{ route('posts.show', ['post' => $post]) }}" class="btn join-item btn-info">View</a>
+                            <a href="{{ route('posts.edit', ['post' => $post]) }}" class="btn join-item btn-warning">Edit</a>
+                                <button form="delete-form-{{$post->id}}" class="btn join-item btn-error">Delete</button>
+                            </div>
                             <form id="delete-form-{{$post->id}}" method="POST" action="{{ route('posts.destroy', ['post' => $post]) }}">
                                 @method('DELETE')
                                 @csrf
                   
                             </form>
-                          </div>
+                    
                     </td>
                 </tr>
                 @endforeach
