@@ -5,7 +5,7 @@
         {{ $posts->links() }}
     </div>
     <div class="overflow-x-auto">
-        <table class="table">
+        <table class="table table-zebra ">
             <thead>
                 <th>ID</th>
                 <th>Title</th>
@@ -15,7 +15,7 @@
             </thead>
             <tbody>
                 @foreach($posts as $post)
-                <tr>
+                <tr class="hover">
                     <td>{{$post->id}}</td>
                     <td>{{$post->title}}</td>
                     <td>{{$post->updated_at}}</td>
@@ -23,12 +23,14 @@
                     <td>
                         <div class="join">
                             <a class="btn join-item btn-info">View</button>
+                            <a href="{{ route('posts.show', ['post' => $post]) }}" class="btn join-item btn-warning">View</button>
                             <a href="{{ route('posts.edit', ['post' => $post]) }}" class="btn join-item btn-warning">Edit</button>
-                            <form method="POST" action="{{ route('posts.destroy', ['post' => $post]) }}">
+                                <button form="" class="btn join-item btn-error">Delete</button>
+                            <form id="delete-form-{{$post->id}}" method="POST" action="{{ route('posts.destroy', ['post' => $post]) }}">
                                 @method('DELETE')
                                 @csrf
-                            <input type="submit" class="btn join-item btn-warning" value="delete">
-            
+                  
+                            </form>
                           </div>
                     </td>
                 </tr>

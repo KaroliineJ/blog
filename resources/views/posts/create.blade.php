@@ -33,6 +33,7 @@
             </label>
             
             <input type="submit" class="btn btn-primary" value="Create">
+            <a href="{{url()->previous()}}" class="btn btn-error">Cancel</a>
         </form>
     </div>
 </div>
