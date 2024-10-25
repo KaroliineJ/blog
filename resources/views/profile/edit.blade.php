@@ -1,29 +1,41 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+@extends('partials.layout')
+@section('content')
+<div class="card bg-base-200  shadow-xl mx-auto my-auto">
+    <div class="card-body">
+        <form method="POST" action="{{ route('posts.update', ['post' => $post]) }}">
+            @method('PUT')
+            @csrf
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text">Title</span>
                 </div>
-            </div>
+                <input type="text" name="title" placeholder="Title" value="{{ old('title') ?? $post->title }}" class="input input-bordered w-full @error('title') input-error @enderror" />
+                <div class="label">
+                    @error('title')
+                        <span class="label-text-alt text-error">{{ $message }}</span>
+                    @enderror
+                </div>
+            </label>
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text">Content</span>
                 </div>
-            </div>
+                <textarea name="body"
+                          rows="12"
+                          placeholder="Write something cool..."
+                          class="textarea textarea-bordered w-full @error('body') textarea-error @enderror">{{ old('body') ?? $post->body }}</textarea>
+                <div class="label">
+                    @error('body')
+                        <span class="label-text-alt text-error">{{ $message }}</span>
+                    @enderror
+                </div>
+            </label>
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
-            </div>
-        </div>
+            <input type="submit" class="btn btn-primary" value="Update">
+
+        </form>
     </div>
-</x-app-layout>
+</div>
+@endsection

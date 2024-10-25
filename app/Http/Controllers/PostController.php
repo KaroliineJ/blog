@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -30,16 +31,9 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-        $imageName = ($_FILES['image']['name'] . microtime() . rand(0, PHP_INT_MAX)) . '.' . $ext;
-        move_uploaded_file(
-            $_FILES['image']['tmp_name'], 
-            __DIR__ .'/../../../storage/app/public/'. $imageName
-        );
-        // dd($_FILES);
         $post = new Post($request->validated());
-        $request->file('image')->store(public_path(''));
-        $post->image = '/storage/' . $imageName;
+        $file = $request->file('image')->store('', ['disk' => 'public']);
+        $post->image = Storage::url($file);
         // $post->title = $request->input('title');
         // $post->body = $request->input('body');
         $post->save();
@@ -67,8 +61,6 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-
-
         $post->fill($request->validated());
         // $post->title = $request->input('title');
         // $post->body = $request->input('body');

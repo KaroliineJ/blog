@@ -2,9 +2,10 @@
 @section('content')
 <div class="card bg-base-200  shadow-xl mx-auto my-auto">
     <div class="card-body">
-        <form method="POST" action="{{ route('posts.update') => $post }}">
-            @csrf
+        <form method="POST" action="{{ route('posts.update', ['post' => $post]) }}">
             @method('PUT')
+            @csrf
+
             <label class="form-control w-full">
                 <div class="label">
                     <span class="label-text">Title</span>
@@ -16,15 +17,15 @@
                     @enderror
                 </div>
             </label>
-            
+
             <label class="form-control w-full">
                 <div class="label">
                     <span class="label-text">Content</span>
                 </div>
                 <textarea name="body"
-                          rows="12"  
+                          rows="12"
                           placeholder="Write something cool..."
-                          class="textarea textarea-bordered w-full @error('body') textarea-error @enderror">{{ old('body') ?? $post->body}}</textarea>
+                          class="textarea textarea-bordered w-full @error('body') textarea-error @enderror">{{ old('body') ?? $post->body }}</textarea>
                 <div class="label">
                     @error('body')
                         <span class="label-text-alt text-error">{{ $message }}</span>
@@ -32,8 +33,8 @@
                 </div>
             </label>
 
-            <input type="submit" class="btn btn-primary" value="Create">
-
+            <input type="submit" class="btn btn-primary" value="Update">
+            <a href="{{url()->previous()}}" class="btn btn-error">Cancel</a>
         </form>
     </div>
 </div>
