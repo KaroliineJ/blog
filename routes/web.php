@@ -6,7 +6,6 @@ use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PublicController::class, 'index'])->name('home');
-
 Route::get('/post/{post}', [PublicController::class, 'post'])->name('post');
 
 Route::get('/admin/posts', [PostController::class, 'index'])->name('posts.index');
@@ -22,7 +21,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/secure', function () {
-    return view('dashboard');
+    return view('secure');
 })->middleware(['auth', 'verified', 'password.confirm'])->name('secure');
 
 Route::middleware('auth')->group(function () {
