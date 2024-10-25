@@ -18,7 +18,8 @@
                 <tr class="hover">
                     <td>{{$post->id}}</td>
                     <td>{{$post->title}}</td>
-                    <td>{{$post->updated_at}}</td>
+                    <td>{{$post->title}}</td>
+                    <td>{{$post->user->name}}</td>
                     <td>{{$post->created_at}}</td>
                     <td>
                         <div class="join">
