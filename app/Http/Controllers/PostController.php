@@ -6,15 +6,24 @@ use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        if(request()->route('post') && request()->route('post')->user->id !== auth()->user()->id){
+            abort(404);
+        }
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $posts = Post::latest()->paginate();
+        $posts = auth()->user()->posts()->latest()->paginate();
+        // $posts = Post::where('user_id', auth()->user()->id)->latest()->paginate();
+        // dd($posts);
         return view('posts.index', compact('posts'));
     }
 
@@ -23,7 +32,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+
+        return view('posts.create', compact('tags'));
     }
 
     /**
@@ -40,6 +50,9 @@ class PostController extends Controller
         // $post->body = $request->input('body');
         $post->user()->associate(auth()->user());
         $post->save();
+        foreach($request->input('tags') as $id){
+            $post->tags()->attach($id);
+        }
         return redirect()->route('posts.index');
     }
 
@@ -73,7 +86,11 @@ class PostController extends Controller
         }
         // $post->title = $request->input('title');
         // $post->body = $request->input('body');
-        $post->save();
+        $post->save(); 
+        $post->tags()->sync($request->input('tags'));
+        // foreach($post->tags as $tag){
+        //     $post->tags()->detach($tag);
+        // }
         return redirect()->route('posts.index');
     }
 
