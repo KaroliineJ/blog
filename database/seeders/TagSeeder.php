@@ -18,6 +18,7 @@ class TagSeeder extends Seeder
         $tags = Tag::factory(20)->create();
         $posts = Post::select('id')->get();
         foreach($posts as $post){
+            //DB::table('post_tag')->insert(['post_id' => $post->id, 'tag_id' => ]);
             $randTags = $tags->random(rand(0, $tags->count()));
             foreach($randTags as $tag){
                 $post->tags()->attach($tag);
