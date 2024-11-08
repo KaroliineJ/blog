@@ -7,12 +7,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PublicController::class, 'index'])->name('home');
 Route::get('/post/{post}', [PublicController::class, 'post'])->name('post');
-Route::post('/post/{post}/like', [PublicController::class, 'like'])->name('like');
 Route::get('/user/{user}', [PublicController::class, 'user'])->name('user');
-Route::get('/user/{user}/follow', [PublicController::class, 'follow'])->name('follow');
+Route::get('/category/{category}', [PublicController::class, 'category'])->name('category');
 
 
-Route::middleware(['auth', 'verified'])->group(function (){
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::post('/post/{post}/like', [PublicController::class, 'like'])->name('like');
+    Route::post('/user/{user}/follow', [PublicController::class, 'follow'])->name('follow');
+    Route::post('/user/{user}/comment', [PublicController::class, 'comment'])->name('comment');
+
     // Route::get('/admin/posts', [PostController::class, 'index'])->name('posts.index');
     // Route::get('/admin/posts/create', [PostController::class, 'create'])->name('posts.create');
     // Route::post('/admin/posts', [PostController::class, 'store'])->name('posts.store');
@@ -38,4 +41,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

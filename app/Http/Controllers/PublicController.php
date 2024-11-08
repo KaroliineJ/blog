@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Post;
 use App\Models\User;
@@ -10,36 +11,26 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PublicController extends Controller
 {
-    public function index()
-    {
+    public function index(){
         $posts = Post::withCount('comments', 'likes')->latest()->simplePaginate(16);
         return view('welcome', compact('posts'));
     }
 
-    public function post(Post $post)
-    {
+    public function post(Post $post){
         return view('post', compact('post'));
     }
 
-    public function like(Post $post)
-    {
-        $user = auth()->user();
-
-        // Check if the user has already liked the post
-        $like = $user->likes()->where('post_id', $post->id)->first();
-
-        if ($like) {
-            // If the like exists, delete it (unlike)
-            $like->delete();
-        } else {
-            // Otherwise, create a new like
-            $like = new Like();
-            $like->user()->associate($user);
-            $like->post()->associate($post);
-            $like->save();
-        }
-
-        return redirect()->back();
+    public function like(Post $post){
+       $like = auth()->user()->likes()->where('post_id', $post->id)->first();
+       if($like){
+        $like->delete();
+       } else {
+        $like = new Like();
+        $like->user()->associate(auth()->user());
+        $like->post()->associate($post);
+        $like->save();
+       }
+       return redirect()->back();
     }
 
     public function user(User $user){
@@ -50,10 +41,19 @@ class PublicController extends Controller
     public function follow(User $user){
         $followee = auth()->user()->followees()->where('followee_id', $user->id)->first();
         if($followee){
-            auth()->user()->followees()->deatach($user);
+            auth()->user()->followees()->detach($user);
         } else {
-            auth()->user()->followees()->deatach($user);
+            auth()->user()->followees()->attach($user);
         }
         return redirect()->back();
-        }
-    }
+     }
+
+     public function comment(Post $post, Request $request){
+        $comment = new Comment();
+        $comment->body = $request->input('body');
+        $comment->post()->associate($post);
+        $comment->user()->associate(auth()->user());
+
+     }
+
+}

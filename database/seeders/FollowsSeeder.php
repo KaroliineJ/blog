@@ -13,11 +13,11 @@ class FollowsSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::all();
+        $users = User::all();
         foreach($users as $user){
-            $randUsers = $users->random(rand(0, $users->count));
+            $randUsers = $users->random(rand(0, $users->count()));
             foreach($randUsers as $randUser){
-                $user
+                $user->followers()->attach($randUser);
             }
         }
     }
