@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Tag;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
@@ -32,7 +33,7 @@ class PostController extends Controller
      */
     public function create()
     {
-
+        $tags=Tag::all();
         return view('posts.create', compact('tags'));
     }
 
