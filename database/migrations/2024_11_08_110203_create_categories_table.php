@@ -20,8 +20,8 @@ return new class extends Migration
         });
 
         Schema::table('posts', function (Blueprint $table){
-            $table->foreignIdFor(Category::class)->nullable()->
-        }
+            $table->foreignIdFor(Category::class)->nullable()->constrained()->cascadeOnDelete();
+        });
     }
 
     /**
@@ -29,6 +29,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('posts', function (Blueprint $table){
+            $table->dropForeignIdFor(Category::class);
+        });
         Schema::dropIfExists('categories');
     }
 };

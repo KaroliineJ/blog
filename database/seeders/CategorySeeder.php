@@ -15,7 +15,7 @@ class CategorySeeder extends Seeder
     {
         $categories = Category::factory(4)->create();
         foreach($categories as $category){
-            Category::factory(rand(0,5))->create(['parent_id' => ])
+            Category::factory(rand(0,5))->create(['parent_id' => $category->id]);
         }
     }
 }

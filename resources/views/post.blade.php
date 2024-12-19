@@ -13,6 +13,7 @@
                         <p class="text-neutral-content">{{ $post->created_at->diffForHumans() }}</p>
                     </div>
                 </div>
+      
                 @if($post->created_at->notEqualTo($post->updated_at))
                     <div class="basis-1/2 text-right">
                         <div class="tooltip w-fit" data-tip="{{ $post->updated_at }}">
@@ -25,6 +26,27 @@
             <div class="card-actions justify-end">
 
             </div>
+        </div>
+    </div>
+
+    <div class="card bg-base-200 shadow-xl min-h-full mb-2">
+        <div class="card-body ">
+            <form action="{{route('comment', ['post' => $post])}}" method="POST">
+                @csrf
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">Comment</span>
+                    </div>
+                    <textarea name="body" rows="4" placeholder="Write something cool..."
+                        class="textarea textarea-bordered w-full @error('body') textarea-error @enderror">{{ old('body') }}</textarea>
+                    <div class="label">
+                        @error('body')
+                            <span class="label-text-alt text-error">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </label>
+                <input type="submit" class="btn btn-primary" value="Comment">
+            </form>
         </div>
     </div>
 
@@ -49,5 +71,9 @@
             <p class="text-neutral-content">{{ $comment->user->name }}</p>
             </div>
         </div>
+        @foreach($post->tags as $tag)
+    <a href="{{ route('tag.show', $tag) }}" class="tag-link">#{{ $tag->name }}</a>
+@endforeach
+
     @endforeach
 @endsection

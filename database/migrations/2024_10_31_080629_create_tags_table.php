@@ -5,7 +5,6 @@ use App\Models\Tag;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
 return new class extends Migration
 {
     /**
@@ -19,12 +18,11 @@ return new class extends Migration
             $table->timestamps();
         });
         Schema::create('post_tag', function (Blueprint $table) {
-           $table->foreignIdFor(Post::class)->constrained()->cascadeOnDelete();
-           $table->foreignIdFor(Tag::class)->constrained()->cascadeOnDelete();
-           $table->unique(['post_id', 'tag_id']);
+            $table->foreignIdFor(Post::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Tag::class)->constrained()->cascadeOnDelete();
+            $table->unique(['post_id', 'tag_id']);
         });
     }
-
     /**
      * Reverse the migrations.
      */
